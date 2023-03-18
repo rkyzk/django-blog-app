@@ -21,6 +21,9 @@ class PostDetail(View):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
+        labeled_favorite = False
+        if post.favorite.filter(id=self.request.user.id).exists():
+            labeled_favorite = True
 
         return render(
             request,
@@ -30,6 +33,7 @@ class PostDetail(View):
                 "comments": comments,
                 "commented": False,
                 "liked": liked,
+                "labeled_favorite": labeled_favorite,
                 "comment_form": CommentForm()
             },
         )
@@ -75,3 +79,16 @@ class PostLike(View):
         else:
             post.likes.add(request.user)
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+
+
+class PostFavorite(View):
+
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug=slug)
+
+        if post.favorite.silter(id=request.user.id).exists():
+            post.favorite.remove(request.user)
+        else:
+            post.favorite.add(request.user)
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+

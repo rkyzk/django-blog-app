@@ -45,6 +45,20 @@
                                         <i class="far fa-heart"></i></button>
                                 {% endif %}
                             </form>
+                            
+                            <form action="{% url 'post_favorite' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if post.labeled_favorite %}
+                                    <p>You've put this post as favorite</p>
+                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}">
+                                      Unpin this Post
+                                    </button>
+                                    {% else %}
+                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}">
+                                    Pin this post</button>
+                                {% endif %}
+                                
+                            </form>
                             {% else %}
                             <span class="text-secondary"><i class="far fa-heart"></i></span>
                             {% endif %}
