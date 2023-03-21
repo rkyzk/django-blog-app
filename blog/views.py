@@ -79,15 +79,16 @@ class PostLike(View):
 
 class MyPage(View):
 
-    def get(self, request, id, name, *args, **kwargs):
-        queryset = Post.objects.filter(author=name)        
-        comments = post.comments.filter(approved=True).order_by('created_on')
+    def get(self, request, id, *args, **kwargs):
+        queryset = Post.objects.filter(author=id)
+        # comments = post.comments.filter(approved=True).order_by('created_on')
 
         return render(
             request,
             "my_page.html",
             {
                 "queryset": queryset,
-                "comments": comments,
+              #  "comments": comments,
             },
         )
+    
