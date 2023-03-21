@@ -5,11 +5,28 @@ from .models import Post, Comment
 from .forms import CommentForm
 
 
-class PostList(generic.ListView):
-    model = Post
-    queryset = Post.objects.filter(status=1).order_by('-created_on')
-    template_name = 'index.html'
-    paginate_by = 6
+# class PostList(generic.ListView):
+#     model = Post
+#     queryset = Post.objects.filter(status=1).order_by('-created_on')
+#     template_name = 'index.html'
+#     paginate_by = 6
+
+class Search(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "index.html")
+
+    def post(self, request, *args, **kwargs):
+        qs = Post.objects.all()
+        title_contains_query = request.POST.get('title_contains')
+        title_exact_query = request.GET.get('title_exact')
+        title_or_author_query = request.GET.get('title_or_author')
+        print(title_contains_query)
+        if title_contains_query != '' and title_contains_query is not None:
+            qs = qs.filter(title__icontains=title_contains_query)
+        context = {
+            'queryset': qs
+        }
+        return render(request, "index.html", context)
 
 
 class PostDetail(View):
