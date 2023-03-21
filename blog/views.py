@@ -21,6 +21,7 @@ class PostDetail(View):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
+        print(liked)
 
         return render(
             request,
@@ -67,7 +68,7 @@ class PostDetail(View):
 
 class PostLike(View):
 
-    def post(self, request, slug):
+    def post(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, slug=slug)
 
         if post.likes.filter(id=request.user.id).exists():

@@ -37,16 +37,18 @@
                             {% if user.is_authenticated %}
                             <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
                                 {% csrf_token %}
-                                {% if post.liked %}
-                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}" class="btn-like">
-                                        <i class="fas fa-heart"></i></button>
+                                {% if liked %}
+                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}" class="btn">
+                                    <i class="fa-solid fa-heart"></i></button>
                                 {% else %}
-                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}" class="btn-like">
-                                        <i class="far fa-heart"></i></button>
+                                    <button type="submit" name="'blogpost_id" value="{{post.slug}}" class="btn">
+                                    <i class="fa-regular fa-heart"></i></button>
+                                    <p>not yet liked</p>
                                 {% endif %}
                             </form>
                             {% else %}
                             <span class="text-secondary"><i class="far fa-heart"></i></span>
+                                <p>sign in and like me</p>
                             {% endif %}
                             <!-- The number of likes goes before the closing strong tag -->
                             <span class="text-secondary">{{ post.number_of_likes }}</span>

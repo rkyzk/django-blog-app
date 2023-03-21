@@ -140,3 +140,7 @@ body {
     background: transparent;
     border: none;
 }
+
+.btn {
+    background-color: #23BBBB;
+}
